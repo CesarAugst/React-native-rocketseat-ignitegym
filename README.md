@@ -8,4 +8,5 @@
 - Instalação: ```npm install @gluestack-ui/themed@1.1.34 @gluestack-style/react@1.0.57 @gluestack-ui/config@1.1.19 --legacy-peer-deps```
 - Correção de bugs: ```npm uninstall react-dom```
 - Dependências: ```npx expo install react-native-svg```
+- Observações: utilize o comando ```npx gluestack-ui-scripts eject-theme``` para ejetar o tema e modificá-lo
 - Adicionado em: 13/03/2025

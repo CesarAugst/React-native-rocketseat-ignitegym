@@ -2,7 +2,7 @@ import { Center, Text } from "@gluestack-ui/themed";
 
 export function History(){
     return(
-        <Center>
+        <Center flex={1}>
             <Text>History</Text>
         </Center>
     )

@@ -1,9 +1,9 @@
-import { Center, Text } from "@gluestack-ui/themed";
+import {Text, VStack } from "@gluestack-ui/themed";
 
 export function Exercise(){
     return(
-        <Center>
+        <VStack flex={1}>
             <Text>Exercise</Text>
-        </Center>
+        </VStack>
     )
 }

@@ -2,7 +2,7 @@ import { Center, Text } from "@gluestack-ui/themed";
 
 export function Profile(){
     return(
-        <Center>
+        <Center flex={1}>
             <Text>Profile</Text>
         </Center>
     )

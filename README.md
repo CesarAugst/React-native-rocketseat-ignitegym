@@ -16,3 +16,10 @@
 - Instalação: ```npm install --save-dev react-native-svg-transformer --legacy-peer-deps```
 - Configurado em: [metro.config.js](./metro.config.js)
 - Adicionado em: 14/03/2025
+
+[]()
+- Navegação da aplicação
+- Instalação: ```npm install @react-navigation/native```
+- Dependências: ```npx expo install react-native-screens react-native-safe-area-context```
+- Estratégia utilizada: ```npm install @react-navigation/native-stack```
+- Adicionado em: 14/03/2025

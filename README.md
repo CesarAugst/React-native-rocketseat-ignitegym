@@ -24,3 +24,8 @@
 - Estratégia Stack: ```npm install @react-navigation/native-stack```
 - Estratégia BottomTab: ```npm install @react-navigation/bottom-tabs```
 - Adicionado em: 14/03/2025
+
+[lucide-react-native](https://lucide.dev/guide/packages/lucide-react-native)
+- Biblioteca de Icones
+- Instalação: ```npm install lucide-react-native```
+- Adicionado em: 14/03/2025

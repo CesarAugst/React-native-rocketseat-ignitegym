@@ -17,9 +17,10 @@
 - Configurado em: [metro.config.js](./metro.config.js)
 - Adicionado em: 14/03/2025
 
-[]()
+[react-navigation](https://reactnavigation.org/docs/getting-started)
 - Navegação da aplicação
 - Instalação: ```npm install @react-navigation/native```
 - Dependências: ```npx expo install react-native-screens react-native-safe-area-context```
-- Estratégia utilizada: ```npm install @react-navigation/native-stack```
+- Estratégia Stack: ```npm install @react-navigation/native-stack```
+- Estratégia BottomTab: ```npm install @react-navigation/bottom-tabs```
 - Adicionado em: 14/03/2025

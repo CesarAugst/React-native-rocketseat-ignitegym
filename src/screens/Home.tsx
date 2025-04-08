@@ -22,7 +22,7 @@ export function Home() {
                 contentContainerStyle={{paddingHorizontal: 32 }}
                 style={{marginVertical: 40, maxHeight: 44, minHeight: 44}}
                 renderItem={({item}) => (
-                    <Group name={item} isActive={groupSelected === item} onPress={() => {
+                    <Group name={item} isActive={groupSelected.toLowerCase() === item.toLowerCase()} onPress={() => {
                         setGroupSelected(item)
                     }} />
                 )}

@@ -21,7 +21,7 @@ export function Profile(){
 
         if(photoSelected.canceled) return;
 
-        setUserPhoto(photoSelected.assets[0].uri)
+        setUserPhoto(photoSelected.assets[0].uri )
     }
 
     return(

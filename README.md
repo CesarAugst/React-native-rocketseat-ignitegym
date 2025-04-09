@@ -34,3 +34,8 @@
 - Selecionar imagens do dispositivo
 - Instalação: ```npx expo install expo-image-picker```
 - Adicionado em: 09/04/2025
+
+[expo-file-system](https://docs.expo.dev/versions/latest/sdk/filesystem/)
+- Estratégia focada em informações do arquivo
+- Instalação: ```npx expo install expo-file-system```
+- Adicionado em: 09/04/2025

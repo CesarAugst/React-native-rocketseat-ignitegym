@@ -3,35 +3,55 @@ import { Input } from "@components/Input";
 import { ScreenHeader } from "@components/ScreenHeader";
 import { UserPhoto } from "@components/UserPhoto";
 import { Center, Heading, Text, VStack } from "@gluestack-ui/themed";
-import { ScrollView, TouchableOpacity } from "react-native";
+import { Alert, ScrollView, TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system";
 import { useState } from "react";
 
-export function Profile(){
+export function Profile() {
 
     const [userPhoto, setUserPhoto] = useState("https://avatars.githubusercontent.com/u/45099916?v=4");
 
-    async function handleUserPhotoSelect(){
-        const photoSelected = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            quality: 1,
-            aspect: [4,4],
-            allowsEditing: true,
-        });
+    async function handleUserPhotoSelect() {
+        try {
 
-        if(photoSelected.canceled) return;
 
-        setUserPhoto(photoSelected.assets[0].uri )
+            const photoSelected = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                quality: 1,
+                aspect: [4, 4],
+                allowsEditing: true,
+            });
+
+            if (photoSelected.canceled) return;
+
+            const photoURI = photoSelected.assets[0].uri
+
+            if (photoURI) {
+                const photoInfo = (await FileSystem.getInfoAsync(photoURI)) as {
+                    size: number
+                };
+
+                //valida se é maior que 5Mb
+                if (photoInfo.size && (photoInfo.size / 1024 / 1024) > 5) {
+                    return Alert.alert("Essa imagem é muito grande. Escolha uma de até 5Mb")
+                }
+
+                setUserPhoto(photoURI)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
-    return(
+    return (
         <VStack flex={1}>
             <ScreenHeader title={"Perfil"} />
 
-            <ScrollView contentContainerStyle={{paddingBottom: 36}}>
+            <ScrollView contentContainerStyle={{ paddingBottom: 36 }}>
                 <Center mt={"$6"} px={"$10"}>
-                    <UserPhoto 
-                        source={{uri: userPhoto}} 
+                    <UserPhoto
+                        source={{ uri: userPhoto }}
                         alt={"Foto du usuário"}
                         size={"xl"}
                     />
@@ -47,8 +67,8 @@ export function Profile(){
                         </Text>
                     </TouchableOpacity>
                     <Center w={"$full"} gap={"$4"}>
-                        <Input placeholder={"Nome"} bg={"$gray600"}/>
-                        <Input value={"cesar@email.com"} bg={"$gray600"} isReadOnly/>
+                        <Input placeholder={"Nome"} bg={"$gray600"} />
+                        <Input value={"cesar@email.com"} bg={"$gray600"} isReadOnly />
                     </Center>
                     <Heading
                         alignSelf={"flex-start"}
@@ -60,13 +80,13 @@ export function Profile(){
                         Alterar Senha
                     </Heading>
                     <Center w={"$full"} gap={"$4"}>
-                        <Input placeholder="Senha antiga" bg={"$gray600"} secureTextEntry/>
-                        <Input placeholder="Nova senha" bg={"$gray600"} secureTextEntry/>
-                        <Input placeholder="Confirme a nova senha" bg={"$gray600"} secureTextEntry/>
-                        <Button title={"Atualizar"}/>
+                        <Input placeholder="Senha antiga" bg={"$gray600"} secureTextEntry />
+                        <Input placeholder="Nova senha" bg={"$gray600"} secureTextEntry />
+                        <Input placeholder="Confirme a nova senha" bg={"$gray600"} secureTextEntry />
+                        <Button title={"Atualizar"} />
                     </Center>
                 </Center>
-                
+
             </ScrollView>
         </VStack>
     )

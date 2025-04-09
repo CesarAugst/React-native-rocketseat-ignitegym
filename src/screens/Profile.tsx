@@ -35,7 +35,7 @@ export function Profile() {
                 };
 
                 //valida se é maior que 5Mb
-                if (photoInfo.size && (photoInfo.size / 1024 / 1024) < 5) {
+                if (photoInfo.size && (photoInfo.size / 1024 / 1024) > 5) {
                     return toast.show({
                         placement: "top",
                         render: ({id}) => (

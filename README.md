@@ -44,3 +44,8 @@
 - Estratégia de manipulação e validação de inputs no formulário
 - Instalação: ```npm install react-hook-form```
 - Adicionado em: 09/04/2025
+
+[@hookform/resolvers yup](https://react-hook-form.com/get-started#SchemaValidation)
+- Extensão para validação de formulários do react-hook-form
+- Instalação: ```npm install @hookform/resolvers yup```
+- Adicionado em: 09/04/2025

@@ -29,3 +29,8 @@
 - Biblioteca de Icones
 - Instalação: ```npm install lucide-react-native```
 - Adicionado em: 14/03/2025
+
+[expo-image-picker](https://docs.expo.dev/versions/latest/sdk/imagepicker/)
+- Selecionar imagens do dispositivo
+- Instalação: ```npx expo install expo-image-picker```
+- Adicionado em: 09/04/2025

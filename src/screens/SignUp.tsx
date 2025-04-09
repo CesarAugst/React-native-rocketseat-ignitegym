@@ -18,7 +18,7 @@ type FormDataProps = {
 
 export function SignUp() {
 
-    const { control, handleSubmit } = useForm<FormDataProps>({
+    const { control, handleSubmit, formState: {errors} } = useForm<FormDataProps>({
         defaultValues:{
             name: "Cesar",
             email: "cesar@email.com.br",
@@ -58,13 +58,25 @@ export function SignUp() {
                         <Controller
                             control={control} 
                             name="name"
-                            render = {({field: {onChange, value}}) => <Input placeholder={"Nome"} onChangeText={onChange} value={value}/>}
+                            rules={{
+                                required: 'Informe o nome.'
+                            }}
+                            render = {({field: {onChange, value}}) => <Input placeholder={"Nome"} onChangeText={onChange} value={value} errorMessage={errors.name?.message}/>}
                         />
+                        
                         <Controller
                             control={control} 
                             name="email"
-                            render = {({field: {onChange, value}}) => <Input placeholder={"E-mail"} onChangeText={onChange} value={value} keyboardType={"email-address"} autoCapitalize={"none"} />}
+                            rules={{
+                                required: "Informe o e-mail",
+                                pattern: {
+                                    value:/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                    message: 'E-mail inválido'
+                                }
+                            }}
+                            render = {({field: {onChange, value}}) => <Input placeholder={"E-mail"} onChangeText={onChange} value={value} keyboardType={"email-address"} autoCapitalize={"none"} errorMessage={errors.email?.message}/>}
                         />
+
                         <Controller
                             control={control} 
                             name="password"

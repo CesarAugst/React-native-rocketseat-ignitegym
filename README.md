@@ -39,3 +39,8 @@
 - Estratégia focada em informações do arquivo
 - Instalação: ```npx expo install expo-file-system```
 - Adicionado em: 09/04/2025
+
+[react-hook-form](https://react-hook-form.com)
+- Estratégia de manipulação e validação de inputs no formulário
+- Instalação: ```npm install react-hook-form```
+- Adicionado em: 09/04/2025

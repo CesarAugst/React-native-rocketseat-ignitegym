@@ -7,19 +7,30 @@ import { Button } from "@components/Button";
 
 import { useNavigation } from "@react-navigation/native";
 
-export function SignUp(){
+import { useForm, Controller } from "react-hook-form";
+
+export function SignUp() {
+
+    const { control } = useForm();
+
     const navigator = useNavigation();
 
-    function handleGoBack(){
+    function handleGoBack() {
         navigator.goBack();
     }
-    return( 
-        <ScrollView contentContainerStyle={{flexGrow: 1}} showsVerticalScrollIndicator={false}>
+
+    function handleSignUp() {
+        console.log({
+        })
+    }
+
+    return (
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
             <VStack flex={1}>
-                <Image 
+                <Image
                     w={"$full"}
                     h={624}
-                    source={BackgroundImg} 
+                    source={BackgroundImg}
                     defaultSource={BackgroundImg}
                     alt={"Pessoas Treinando"}
                     position={"absolute"}
@@ -27,21 +38,35 @@ export function SignUp(){
                 <VStack flex={1} px={"$10"} pb={"$16"}>
                     <Center my={"$24"}>
                         <Logo />
-                        <Text color={"$gray100"} fontSize={"$sm"}> 
+                        <Text color={"$gray100"} fontSize={"$sm"}>
                             Treine sua mente e corpo.
                         </Text>
                     </Center>
                     <Center gap={"$2"} flex={1}>
                         <Heading color={"$gray100"}>Crie sua conta</Heading>
-
-                        <Input placeholder={"Nome"} />
-                        <Input placeholder={"E-mail"} keyboardType={"email-address"} autoCapitalize={"none"}/>
-                        <Input placeholder={"Senha"} secureTextEntry/>
-
-                        <Button title={"Criar e acessar"}/>
+                        <Controller
+                            control={control} 
+                            name="name"
+                            render = {({field: {onChange, value}}) => <Input placeholder={"Nome"} onChangeText={onChange} value={value}/>}
+                        />
+                        <Controller
+                            control={control} 
+                            name="email"
+                            render = {({field: {onChange, value}}) => <Input placeholder={"E-mail"} onChangeText={onChange} value={value} keyboardType={"email-address"} autoCapitalize={"none"} />}
+                        />
+                        <Controller
+                            control={control} 
+                            name="password"
+                            render = {({field: {onChange, value}}) => <Input placeholder={"Senha"} onChangeText={onChange} value={value} secureTextEntry />}
+                        />
+                        <Controller
+                            control={control} 
+                            name="password_confirm"
+                            render = {({field: {onChange, value}}) => <Input placeholder={"Confirme a senha"} onChangeText={onChange} value={value} secureTextEntry />}
+                        />
+                        <Button title={"Criar e acessar"} onPress={handleSignUp} />
                     </Center>
-
-                    <Button title="Voltar para o login" variant="outline" mt={"$12"} onPress={handleGoBack}/>
+                    <Button title="Voltar para o login" variant="outline" mt={"$12"} onPress={handleGoBack} />
                 </VStack>
             </VStack>
         </ScrollView>

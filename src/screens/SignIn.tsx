@@ -9,11 +9,8 @@ import { Input } from "@components/Input";
 import { Button } from "@components/Button";
 
 import { useForm, Controller } from "react-hook-form";
-import {yupResolver} from "@hookform/resolvers/yup"
-import * as yup from "yup";
-import { api } from "@services/api";
-import { AppError } from "@utils/AppError";
-import { ToastMessage } from "@components/ToastMessage";
+
+import {useAuth} from '@hooks/useAuth';
 
 type FormData = {
     email: string;
@@ -21,6 +18,8 @@ type FormData = {
 }
 
 export function SignIn(){
+    const {signIn} = useAuth();
+
     const navigator = useNavigation<AuthNavigatorRoutesProps>();
 
     const {control, handleSubmit, formState: {errors}} = useForm<FormData>();
@@ -29,8 +28,8 @@ export function SignIn(){
         navigator.navigate("signUp");
     }
 
-    function handleSignIn({email, password}: FormData){
-        console.log(email, password)
+    async function handleSignIn({email, password}: FormData){
+        await signIn(email, password);
     }
 
     return(

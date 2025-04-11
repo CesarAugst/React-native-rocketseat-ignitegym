@@ -49,3 +49,8 @@
 - Extensão para validação de formulários do react-hook-form
 - Instalação: ```npm install @hookform/resolvers yup```
 - Adicionado em: 09/04/2025
+
+[axios](https://axios-http.com/ptbr/docs/intro)
+- Simplificação de requisições HTTP
+- Instalação: ```npm install axios```
+- Adicionado em: 11/04/2025

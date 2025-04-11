@@ -13,6 +13,7 @@ import { useForm, Controller } from "react-hook-form";
 import {useAuth} from '@hooks/useAuth';
 import { AppError } from "@utils/AppError";
 import { ToastMessage } from "@components/ToastMessage";
+import { useState } from "react";
 
 type FormData = {
     email: string;
@@ -20,6 +21,7 @@ type FormData = {
 }
 
 export function SignIn(){
+    const [isLoading, setIsLoading] = useState(false);
     const {signIn} = useAuth();
     const navigator = useNavigation<AuthNavigatorRoutesProps>();
 
@@ -33,6 +35,7 @@ export function SignIn(){
 
     async function handleSignIn({email, password}: FormData){
         try{
+            setIsLoading(true);
             await signIn(email, password);
         }catch(error){
             const isAppError = error instanceof AppError;
@@ -49,6 +52,7 @@ export function SignIn(){
                     />
                 )
             })
+            setIsLoading(false);
         }
     }
 
@@ -88,7 +92,7 @@ export function SignIn(){
                                 <Input placeholder={"Senha"} secureTextEntry  onChangeText={onChange} errorMessage={errors.email?.message}/>
                             )}
                         />
-                        <Button title={"Acessar"} onPress={handleSubmit(handleSignIn)}/>
+                        <Button title={"Acessar"} onPress={handleSubmit(handleSignIn)} isLoading={isLoading}/>
                     </Center>
                     <Center flex={1} justifyContent="flex-end" mt={"$4"}>
                         <Text color={"$gray100"} fontSize={"$sm"} mb={"$3"} fontFamily={"$body"}>Ainda não tem acesso?</Text>

@@ -54,3 +54,8 @@
 - Simplificação de requisições HTTP
 - Instalação: ```npm install axios```
 - Adicionado em: 11/04/2025
+
+[async-storage](https://docs.expo.dev/versions/latest/sdk/async-storage/)
+- Armazenamento interno do dispositivo
+- Instalação: ```npx expo install @react-native-async-storage/async-storage```
+- Adicionado em: 11/04/2025

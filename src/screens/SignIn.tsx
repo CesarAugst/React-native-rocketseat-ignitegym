@@ -8,11 +8,29 @@ import Logo from "@assets/logo.svg";
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
 
+import { useForm, Controller } from "react-hook-form";
+import {yupResolver} from "@hookform/resolvers/yup"
+import * as yup from "yup";
+import { api } from "@services/api";
+import { AppError } from "@utils/AppError";
+import { ToastMessage } from "@components/ToastMessage";
+
+type FormData = {
+    email: string;
+    password: string;
+}
+
 export function SignIn(){
     const navigator = useNavigation<AuthNavigatorRoutesProps>();
 
+    const {control, handleSubmit, formState: {errors}} = useForm<FormData>();
+
     function handleNewAccount(){
         navigator.navigate("signUp");
+    }
+
+    function handleSignIn({email, password}: FormData){
+        console.log(email, password)
     }
 
     return(
@@ -35,12 +53,26 @@ export function SignIn(){
                     </Center>
                     <Center gap={"$2"}>
                         <Heading color={"$gray100"}>Acesse a conta</Heading>
-                        <Input placeholder={"E-mail"} keyboardType={"email-address"} autoCapitalize={"none"}/>
-                        <Input placeholder={"Senha"} secureTextEntry/>
-                        <Button title={"Acessar"}/>
+                        <Controller 
+                            control={control}
+                            name="email"
+                            rules={{required: 'Informe o e-mail'}}
+                            render={({field: {onChange}}) => (
+                                <Input placeholder="E-mail" keyboardType="email-address" autoCapitalize="none" onChangeText={onChange} errorMessage={errors.email?.message}/>
+                            )}
+                        />
+                        <Controller 
+                            control={control}
+                            name="password"
+                            rules={{required: 'Informe a senha'}}
+                            render={({field: {onChange}}) =>(
+                                <Input placeholder={"Senha"} secureTextEntry  onChangeText={onChange} errorMessage={errors.email?.message}/>
+                            )}
+                        />
+                        <Button title={"Acessar"} onPress={handleSubmit(handleSignIn)}/>
                     </Center>
                     <Center flex={1} justifyContent="flex-end" mt={"$4"}>
-                        <Text color={"$gray100"} fontSize={"$sm"} mb={"$3"} fontFamily={"$body"}>Ainfa não tem acesso?</Text>
+                        <Text color={"$gray100"} fontSize={"$sm"} mb={"$3"} fontFamily={"$body"}>Ainda não tem acesso?</Text>
                         <Button title="Criar Conta" variant="outline" onPress={handleNewAccount}/>
                     </Center>
                 </VStack>

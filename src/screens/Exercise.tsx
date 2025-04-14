@@ -13,12 +13,14 @@ import { ToastMessage } from "@components/ToastMessage";
 import { api } from "@services/api";
 import { useEffect, useState } from "react";
 import { ExerciseDTO } from "@dtos/ExerciseDTO";
+import { Loading } from "@components/Loading";
 
 type RouteParamsProps = {
     exerciseId: string;
 }
 
 export function Exercise() {
+    const [isLoading, setIsLoading] = useState(true);
     const [exercise, setExercise] = useState<ExerciseDTO>();
 
     const navigation = useNavigation<AppNavigatorRoutesProps>();
@@ -33,6 +35,7 @@ export function Exercise() {
 
     async function fetchExerciseDetails(){
         try{
+            setIsLoading(true);
             const response = await api.get(`/exercises/${exerciseId}`);
             setExercise(response.data);
 
@@ -51,6 +54,8 @@ export function Exercise() {
                 )
             })
                     
+        }finally{
+            setIsLoading(false);
         }
     }
 
@@ -91,37 +96,40 @@ export function Exercise() {
                 </HStack>
             </VStack>
 
-            <ScrollView 
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{
-                    paddingBottom: 62
-                }}
-            >
-                <VStack p="$8">
-                    <Image
-                        source={{ uri: `${api.defaults.baseURL}/exercise/demo/${exercise?.demo}` }}
-                        alt="Exercício"
-                        mb="$3"
-                        resizeMode="cover"
-                        rounded="$lg"
-                        w={"$full"}
-                        h={"$80"}
-                    />
-                    <Box bg="$gray600" rounded="$md" pb="$4" px="$4">
-                        <HStack alignItems="center" justifyContent="space-around" mb="$6" mt="$5">
-                            <HStack>
-                                <SeriesSVG />
-                                <Text color="$gray200" ml="$2">{exercise?.series} Séries</Text>
+            {
+                isLoading ? <Loading /> : 
+                <ScrollView 
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{
+                        paddingBottom: 62
+                    }}
+                >
+                    <VStack p="$8">
+                        <Image
+                            source={{ uri: `${api.defaults.baseURL}/exercise/demo/${exercise?.demo}` }}
+                            alt="Exercício"
+                            mb="$3"
+                            resizeMode="cover"
+                            rounded="$lg"
+                            w={"$full"}
+                            h={"$80"}
+                        />
+                        <Box bg="$gray600" rounded="$md" pb="$4" px="$4">
+                            <HStack alignItems="center" justifyContent="space-around" mb="$6" mt="$5">
+                                <HStack>
+                                    <SeriesSVG />
+                                    <Text color="$gray200" ml="$2">{exercise?.series} Séries</Text>
+                                </HStack>
+                                <HStack>
+                                    <RepetitionSVG />
+                                    <Text color="$gray200" ml="$2">{exercise?.repetitions} Repetições</Text>
+                                </HStack>
                             </HStack>
-                            <HStack>
-                                <RepetitionSVG />
-                                <Text color="$gray200" ml="$2">{exercise?.repetitions} Repetições</Text>
-                            </HStack>
-                        </HStack>
-                        <Button title="Marcar como realizado"/>
-                    </Box>
-                </VStack>
-            </ScrollView>
+                            <Button title="Marcar como realizado"/>
+                        </Box>
+                    </VStack>
+                </ScrollView>
+            }
         </VStack>
     )
 }

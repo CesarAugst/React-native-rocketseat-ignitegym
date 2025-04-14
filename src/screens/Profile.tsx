@@ -12,6 +12,8 @@ import { Controller, useForm } from "react-hook-form";
 import { useAuth } from "@hooks/useAuth";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { AppError } from "@utils/AppError";
+import { api } from "@services/api";
 
 type FormDataProps = {
     name: string;
@@ -39,10 +41,10 @@ const profileSchema = yup.object({
 }) as yup.ObjectSchema<FormDataProps, any, any>
 
 export function Profile() {
-
+    const [isUpdating, setIsUpdating] = useState(false);
     const [userPhoto, setUserPhoto] = useState("https://avatars.githubusercontent.com/u/45099916?v=4");
     const toast = useToast();
-    const { user } = useAuth();
+    const { user, updateUserProfile } = useAuth();
     const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
         defaultValues: {
             name: user.name,
@@ -95,7 +97,29 @@ export function Profile() {
     }
 
     async function handleProfileUpdate(data: FormDataProps) {
-        console.log(data);
+        try{
+            setIsUpdating(true);
+            const userUpdated = user;
+            userUpdated.name = data.name;
+            await api.put("/users", data);
+            await updateUserProfile(userUpdated);
+        }catch(error){
+            const isAppError = error instanceof AppError;
+            const title = isAppError ? error.message : "Não foi possível carregar os exercícios"
+
+            toast.show({
+                render: ({id}) => (
+                    <ToastMessage 
+                        id={id}
+                        title={title}
+                        action="error"
+                        onClose={() => toast.close(id)}
+                    />
+                )
+            })
+        }finally{
+            setIsUpdating(false);
+        }
     }
     return (
         <VStack flex={1}>
@@ -166,7 +190,7 @@ export function Profile() {
                                 <Input placeholder="Confirme a nova senha" bg={"$gray600"} secureTextEntry onChangeText={onChange} errorMessage={errors.confirm_password?.message}/>
                             )}
                         />
-                        <Button title={"Atualizar"} onPress={handleSubmit(handleProfileUpdate)} />
+                        <Button title={"Atualizar"} onPress={handleSubmit(handleProfileUpdate)} isLoading={isUpdating} />
                     </Center>
                 </Center>
 

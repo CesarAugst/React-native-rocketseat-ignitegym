@@ -4,7 +4,7 @@ import { api } from "@services/api";
 import { AppError } from "@utils/AppError";
 import { ToastMessage } from "@components/ToastMessage";
 import { storageUserGet, storageUserRemove, storageUserSave } from "@storage/storageUser";
-import { storageAuthTokenGet, storageAuthTokenSave } from "@storage/storageAuthToken";
+import { storageAuthTokenGet, storageAuthTokenRemove, storageAuthTokenSave } from "@storage/storageAuthToken";
 
 export type AuthContextDataProps = {
     user: UserDTO;
@@ -59,7 +59,8 @@ export function AuthContextProvider({children}: AuthContextProviderProps){
         try{
             setIsLoadingUserStorageData(true);
             setUser({} as UserDTO);
-            storageUserRemove();
+            await storageUserRemove();
+            await storageAuthTokenRemove();
         }catch(error){
             throw error;
         }finally{

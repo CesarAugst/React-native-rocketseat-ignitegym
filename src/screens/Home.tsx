@@ -1,22 +1,52 @@
 import { ExerciseCard } from "@components/ExerciseCard";
 import { Group } from "@components/Group";
 import { HomeHeader } from "@components/HomeHeader";
-import { Center, Heading, HStack, Text, VStack } from "@gluestack-ui/themed";
-import { useState } from "react";
+import { Center, Heading, HStack, Text, useToast, VStack } from "@gluestack-ui/themed";
+import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import { AppNavigatorRoutesProps } from "@routes/app.routes";
+import { AppError } from "@utils/AppError";
+import { ToastMessage } from "@components/ToastMessage";
+import { api } from "@services/api";
 
 export function Home() {
-    const [exercise, setExercise] = useState(["Puxada Frontal", "Remada Curvada", "Remada Unilateral", "Levantamento Terra", ]);
-    const [groups, setGroups] = useState(["Costas", "Bíceps", "Tríceps", "Ombro"]);
+    const [exercise, setExercise] = useState<string[]>(["Puxada Frontal", "Remada Curvada", "Remada Unilateral", "Levantamento Terra", ]);
+    const [groups, setGroups] = useState<string[]>([]);
     const [groupSelected, setGroupSelected] = useState("Costas");
 
+    const toast = useToast();
     const navigation = useNavigation<AppNavigatorRoutesProps>()
 
     function handleOpenExerciseDetails(){
         navigation.navigate("exercise")
     }
+
+    async function fetchGroups(){
+        try{
+            const response = await api.get("/groups");
+            setGroups(response.data);
+        }catch(error){
+            const isAppError = error instanceof AppError;
+            const title = isAppError ? error.message : "Não foi possível carregar os grupos musculares"
+
+            toast.show({
+                render: ({id}) => (
+                    <ToastMessage 
+                        id={id}
+                        title={title}
+                        action="error"
+                        onClose={() => toast.close(id)}
+                    />
+                )
+            })
+            
+        }
+    }
+
+    useEffect(() => {
+        fetchGroups();
+    }, []);
 
     return (
         <VStack flex={1}>

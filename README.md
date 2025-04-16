@@ -11,12 +11,15 @@ Para criar este projeto, foi utilizado o comando:
 npx create-expo-app ignitegym --template
 ```
 
+---
+
 ## 📦 **Instalação**
 Antes de executar o projeto, instale as dependências com:
 ```bash
 npm install
 ```
 
+---
 
 ## ▶️ **Execução**
 Para iniciar a aplicação, utilize:
@@ -24,15 +27,19 @@ Para iniciar a aplicação, utilize:
 npx expo start
 ```
 
+---
+
 O comando abrirá o **Expo DevTools** no navegador.  
 Você pode rodar o app em um emulador ou escanear o QR code com o app **Expo Go** no celular.
 
+---
 
 ## 🔗 **Backend**
 Para conectar com o backend, utilize o repositório oficial da API:  
 👉 [ignitegym-api](https://github.com/orodrigogo/ignitegym-api)
 (Não se esqueça de indicar o IP local do servidor backend no arquivo [api.ts](./src/services/api.ts))
 
+---
 
 ## 📸 **Pré-visualização do App**
 
@@ -49,6 +56,8 @@ Para conectar com o backend, utilize o repositório oficial da API:
   <img src="./assets/screenshot_06.png" alt="Perfil" width="45%"/>
 </p>
 
+---
+
 ## 🛠️ **Tecnologias & Conceitos Aplicados**
 - **Componentes Básicos**: View, Text, Image, TouchableOpacity, ScrollView
 - **Estilização**: com **Gluestack UI** e **expo-google-fonts**
@@ -59,6 +68,7 @@ Para conectar com o backend, utilize o repositório oficial da API:
 - **Manipulação de Imagens**: com **expo-image-picker** e **expo-file-system**
 - **SVG como Componentes**: com **react-native-svg-transformer**
 
+---
 
 ## 📦 **Recursos e Bibliotecas Utilizadas**
 
@@ -177,6 +187,7 @@ Para conectar com o backend, utilize o repositório oficial da API:
   npm install
   ```
 
+---
 
 ## 💡 **Sobre o Curso**
 Projeto desenvolvido durante o curso de **React Native** na Rocketseat, com foco em práticas modernas de desenvolvimento mobile, organização de código e integração com API externa.

@@ -1,4 +1,5 @@
 import { HistoryCard } from "@components/HistoryCard";
+import { Loading } from "@components/Loading";
 import { ScreenHeader } from "@components/ScreenHeader";
 import { ToastMessage } from "@components/ToastMessage";
 import { HistoryByDayDTO } from "@dtos/HistoryByDayDTO";
@@ -46,7 +47,9 @@ export function History(){
     return(
         <VStack flex={1}>
             <ScreenHeader title={"Histórico de Exercícios"}/>
-            <SectionList 
+            {
+                isLoading ? <Loading /> : 
+                <SectionList 
                 sections={exercises}
                 keyExtractor={item => item.id}
                 renderItem={({item}) => <HistoryCard data={item}/>}
@@ -63,7 +66,7 @@ export function History(){
                         fontFamily={"$heading"}
                     >{section.title}</Heading>
                 )}
-            />
+            />}
         </VStack>
     )
 }

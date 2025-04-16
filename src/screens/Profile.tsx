@@ -14,6 +14,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AppError } from "@utils/AppError";
 import { api } from "@services/api";
+import defaultUserPhotoImg from '@assets/userPhotoDefault.png';
 
 type FormDataProps = {
     name: string;
@@ -42,7 +43,6 @@ const profileSchema = yup.object({
 
 export function Profile() {
     const [isUpdating, setIsUpdating] = useState(false);
-    const [userPhoto, setUserPhoto] = useState("https://avatars.githubusercontent.com/u/45099916?v=4");
     const toast = useToast();
     const { user, updateUserProfile } = useAuth();
     const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
@@ -101,11 +101,15 @@ export function Profile() {
                 const userPhotoUploadForm = new FormData();
                 userPhotoUploadForm.append('avatar', photoFile);
 
-                await api.patch('/users/avatar', userPhotoUploadForm, {
+                const avatarUpdatedResponse = await api.patch('/users/avatar', userPhotoUploadForm, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
                 })
+
+                const userUpdated = user;
+                userUpdated.avatar = avatarUpdatedResponse.data.avatar;
+                updateUserProfile(userUpdated);
 
                 toast.show({
                     placement: "top",
@@ -156,7 +160,7 @@ export function Profile() {
             <ScrollView contentContainerStyle={{ paddingBottom: 36 }}>
                 <Center mt={"$6"} px={"$10"}>
                     <UserPhoto
-                        source={{ uri: userPhoto }}
+                        source={user.avatar ? {uri: `${api.defaults.baseURL}/avatar/${user.avatar}`} : defaultUserPhotoImg }
                         alt={"Foto du usuário"}
                         size={"xl"}
                     />

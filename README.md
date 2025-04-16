@@ -37,7 +37,7 @@ Você pode rodar o app em um emulador ou escanear o QR code com o app **Expo Go*
 ## 🔗 **Backend**
 Para conectar com o backend, utilize o repositório oficial da API:  
 👉 [ignitegym-api](https://github.com/orodrigogo/ignitegym-api)
-(Não se esqueça de indicar o IP local do servidor backend no arquivo [api.ts](./src/services/api.ts))
+(Não se esqueça de indicar o IP do servidor backend no arquivo [api.ts](./src/services/api.ts))
 
 ---
 
